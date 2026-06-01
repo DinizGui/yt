@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Secreto</title>
+  <title>Player</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -18,7 +18,8 @@
     }
     .container {
       text-align: center;
-      max-width: 500px;
+      max-width: 560px;
+      width: 100%;
     }
     h1 {
       font-size: 2.5rem;
@@ -28,39 +29,86 @@
       -webkit-text-fill-color: transparent;
     }
     p {
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
       opacity: 0.85;
     }
+    .row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1rem;
+    }
+    input {
+      flex: 1;
+      padding: 14px 18px;
+      font-size: 1rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      border-radius: 12px;
+      outline: none;
+    }
+    input::placeholder { color: rgba(255,255,255,0.4); }
+    input:focus { border-color: #ff6b6b; }
     button {
       background: linear-gradient(90deg, #ff6b6b, #ee5a6f);
       color: white;
       border: none;
-      padding: 18px 40px;
-      font-size: 1.1rem;
+      padding: 14px 28px;
+      font-size: 1rem;
       font-weight: 600;
-      border-radius: 50px;
+      border-radius: 12px;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 20px rgba(238, 90, 111, 0.4);
+      transition: transform 0.15s;
     }
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 25px rgba(238, 90, 111, 0.6);
-    }
+    button:hover { transform: translateY(-1px); }
     .hint {
-      margin-top: 2rem;
+      margin-top: 1.5rem;
       font-size: 0.85rem;
       opacity: 0.5;
+      line-height: 1.6;
+    }
+    code {
+      background: rgba(255,255,255,0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Bem-vindo</h1>
-    <p>Clique no botão pra acessar o conteúdo exclusivo.</p>
-    <button onclick="window.location.href='/abrir'">Acessar agora</button>
-    <p class="hint">Aguardando conexão segura...</p>
+    <h1>Player</h1>
+    <p>Cole o link do YouTube ou só o ID:</p>
+    <form class="row" onsubmit="abrir(event)">
+      <input id="input" type="text" placeholder="https://youtube.com/watch?v=... ou só o ID" autofocus>
+      <button type="submit">Abrir</button>
+    </form>
+    <p class="hint">
+      Dica: você também pode acessar direto via <code>/v?id=ID_DO_VIDEO</code>
+    </p>
   </div>
+
+  <script>
+    function extrairId(texto) {
+      const t = texto.trim();
+      const m = t.match(/(?:v=|youtu\.be\/|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{6,15})/);
+      if (m) return m[1];
+      if (/^[A-Za-z0-9_-]{6,15}$/.test(t)) return t;
+      return null;
+    }
+    function abrir(e) {
+      e.preventDefault();
+      const valor = document.getElementById('input').value;
+      const id = extrairId(valor);
+      if (!id) {
+        alert('Link ou ID inválido');
+        return;
+      }
+      const m = valor.match(/[?&]t=(\d+)/);
+      const t = m ? `&t=${m[1]}` : '';
+      window.location.href = `/v?id=${id}${t}`;
+    }
+  </script>
 </body>
 </html>

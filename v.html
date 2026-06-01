@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Player</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    .wrap {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .error {
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+    .error h1 { font-size: 1.5rem; margin-bottom: 0.5rem; opacity: 0.9; }
+    .error p { opacity: 0.6; }
+    .error code {
+      background: #222;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-family: monospace;
+      margin-top: 1rem;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="root"></div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const t = params.get('t') || '0';
+    const root = document.getElementById('root');
+
+    if (!id || !/^[A-Za-z0-9_-]{6,15}$/.test(id)) {
+      root.innerHTML = `
+        <div class="error">
+          <h1>Vídeo não encontrado</h1>
+          <p>Use um link válido com ID do vídeo.</p>
+          <code>?id=ID_DO_VIDEO</code>
+        </div>
+      `;
+    } else {
+      const start = t.replace(/[^0-9]/g, '') || '0';
+      const src = `https://www.youtube.com/embed/${id}?autoplay=1&start=${start}&rel=0&modestbranding=1`;
+      const iframe = document.createElement('iframe');
+      iframe.src = src;
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      root.appendChild(iframe);
+    }
+  </script>
+</body>
+</html>
