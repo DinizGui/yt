@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Secreto</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      padding: 20px;
+    }
+    .container {
+      text-align: center;
+      max-width: 500px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, #ff6b6b, #feca57);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      opacity: 0.85;
+    }
+    button {
+      background: linear-gradient(90deg, #ff6b6b, #ee5a6f);
+      color: white;
+      border: none;
+      padding: 18px 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(238, 90, 111, 0.4);
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(238, 90, 111, 0.6);
+    }
+    .hint {
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bem-vindo</h1>
+    <p>Clique no botão pra acessar o conteúdo exclusivo.</p>
+    <button onclick="window.location.href='/abrir'">Acessar agora</button>
+    <p class="hint">Aguardando conexão segura...</p>
+  </div>
+</body>
+</html>
