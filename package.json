@@ -1,0 +1,13 @@
+{
+  "name": "gatilho-yt",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "view": "node view-bot.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "puppeteer": "^23.11.1"
+  }
+}

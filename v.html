@@ -6,40 +6,33 @@
   <title>View</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      min-height: 100vh;
-      background: #0a0a0a;
-      color: #888;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+    html, body { height: 100%; background: #000; overflow: hidden; }
+    #player {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
     }
-    .box { text-align: center; max-width: 360px; }
-    .ok { color: #6bcb77; font-size: 0.9rem; }
-    .err { color: #ff6b6b; }
+    #player iframe {
+      width: 100%;
+      height: 100%;
+    }
+    .status {
+      position: fixed;
+      bottom: 8px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font: 0.7rem/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: rgba(255,255,255,0.25);
+      pointer-events: none;
+      z-index: 2;
+    }
   </style>
 </head>
 <body>
-  <div class="box" id="root">...</div>
-  <script type="module">
-    import { VIDEO_ID } from './video.config.js';
-
-    const root = document.getElementById('root');
-
-    fetch('/api/view')
-      .then((r) => r.json().then((d) => ({ ok: r.ok, d })))
-      .then(({ ok, d }) => {
-        if (!ok) {
-          root.innerHTML = `<p class="err">${d.error || 'falhou'}</p>`;
-          return;
-        }
-        root.innerHTML = `<p class="ok">view • ${d.videoId || VIDEO_ID}</p>`;
-      })
-      .catch(() => {
-        root.innerHTML = '<p class="err">erro de rede</p>';
-      });
-  </script>
+  <div id="player"></div>
+  <div class="status" id="status">view • 2sTS91HNoIs</div>
+  <script type="module" src="/js/view.js"></script>
 </body>
 </html>
